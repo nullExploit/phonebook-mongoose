@@ -17,8 +17,8 @@ const PhoneBookQueryType = {
       if (!limit) {
         return await PhoneBook.find({
           $or: [
-            { name: { $regex: new RegExp(keyword) } },
-            { phone: { $regex: new RegExp(keyword) } },
+            { name: { $regex: new RegExp(keyword, "i") } },
+            { phone: { $regex: new RegExp(keyword, "i") } },
           ],
         })
           .sort({ name: sort })
@@ -26,8 +26,8 @@ const PhoneBookQueryType = {
       }
       return await PhoneBook.find({
         $or: [
-          { name: { $regex: new RegExp(keyword) } },
-          { phone: { $regex: new RegExp(keyword) } },
+          { name: { $regex: new RegExp(keyword, "i") } },
+          { phone: { $regex: new RegExp(keyword, "i") } },
         ],
       })
         .sort({ name: sort })
