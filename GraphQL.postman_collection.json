@@ -1,0 +1,51 @@
+{
+	"info": {
+		"_postman_id": "6e1b992c-7e62-4596-8ab5-6f00d34d9131",
+		"name": "GraphQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36199595"
+	},
+	"item": [
+		{
+			"name": "GraphQL Queries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{graphqlurl}}?query=",
+					"host": [
+						"{{graphqlurl}}"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GraphQL Mutation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation PhoneBook($id: String, $name: String, $phone: String) {\n    # addphonebook(name: $name, phone: $phone) {\n    #     id,\n    #     name,\n    #     phone\n    # }\n    updatephonebook(id: $id, name: $name, phone: $phone) {\n        id,\n        name,\n        phone\n    }\n    # removephonebook(id: $id) {\n    #     id,\n    #     name,\n    #     phone,\n    #     avatar\n    # }\n}",
+						"variables": "{\n    \"id\": \"66bc47f1ee63bdbc79954253\",\n    \"name\": \"Prius\",\n    \"phone\": \"08238132222\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{graphqlurl}}",
+					"host": [
+						"{{graphqlurl}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

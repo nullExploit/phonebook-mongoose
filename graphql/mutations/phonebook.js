@@ -10,13 +10,10 @@ const PhoneBookMutationType = {
       name: { type: GraphQLString },
       phone: { type: GraphQLString },
     },
-    resolve: (_, args) => {
+    resolve: async (_, args) => {
       const { name, phone } = args;
-      const phoneBookObj = new PhoneBook({
-        name,
-        phone,
-      });
-      return phoneBookObj.save();
+      const phonebook = await PhoneBook.create({ name, phone });
+      return phonebook;
     },
   },
   removephonebook: {
@@ -24,8 +21,11 @@ const PhoneBookMutationType = {
     args: {
       id: { type: GraphQLString },
     },
-    resolve: (_, args) => {
-      return PhoneBook.deleteOne({ _id: new Types.ObjectId(args.id) });
+    resolve: async (_, args) => {
+      const phonebook = PhoneBook.deleteOne({
+        _id: new Types.ObjectId(args.id),
+      });
+      return phonebook;
     },
   },
   updatephonebook: {
@@ -35,12 +35,14 @@ const PhoneBookMutationType = {
       name: { type: GraphQLString },
       phone: { type: GraphQLString },
     },
-    resolve: (_, args) => {
+    resolve: async (_, args) => {
       const { id, name, phone } = args;
-      return PhoneBook.findByIdAndUpdate(
+      const phonebook = await PhoneBook.findByIdAndUpdate(
         { _id: new Types.ObjectId(id) },
-        { name, phone }
+        { name, phone },
+        { new: true }
       );
+      return phonebook;
     },
   },
   updateavatarphonebook: {
@@ -49,14 +51,16 @@ const PhoneBookMutationType = {
       id: { type: GraphQLString },
       avatar: { type: GraphQLString },
     },
-    resolve: (_, args) => {
+    resolve: async (_, args) => {
       const { id, avatar } = args;
-      return PhoneBook.findByIdAndUpdate(
+      const phonebook = await PhoneBook.findByIdAndUpdate(
         {
           _id: new Types.ObjectId(id),
         },
-        { avatar }
+        { avatar },
+        { new: true }
       );
+      return phonebook;
     },
   },
 };
