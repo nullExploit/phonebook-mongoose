@@ -2,6 +2,8 @@ const { GraphQLString } = require("graphql");
 const PhoneBookType = require("../types/phonebooks");
 const PhoneBook = require("../../models/PhoneBook");
 const { Types } = require("mongoose");
+const { readdirSync, unlinkSync } = require("fs");
+const path = require("path");
 
 const PhoneBookMutationType = {
   addphonebook: {
@@ -22,6 +24,23 @@ const PhoneBookMutationType = {
       id: { type: GraphQLString },
     },
     resolve: async (_, args) => {
+      for (let file of readdirSync(
+        path.join(__dirname, "..", "..", "..", "phonebook-uploads", "mongoose")
+      )) {
+        if (file.split("-")[1] == args.id) {
+          unlinkSync(
+            path.join(
+              __dirname,
+              "..",
+              "..",
+              "..",
+              "phonebook-uploads",
+              "mongoose",
+              file
+            )
+          );
+        }
+      }
       const phonebook = PhoneBook.deleteOne({
         _id: new Types.ObjectId(args.id),
       });

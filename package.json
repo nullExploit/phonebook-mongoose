@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-fileupload": "^1.5.1",
     "graphql": "^16.9.0",
     "graphql-http": "^1.22.1",
     "mongoose": "^8.5.2",
