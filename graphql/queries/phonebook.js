@@ -50,6 +50,20 @@ const PhoneBookQueryType = {
       return await PhoneBook.find({ _id: new Types.ObjectId(id) }).exec();
     },
   },
+  totalphonebook: {
+    type: GraphQLInt,
+    args: {
+      keyword: { type: GraphQLString, defaultValue: "" },
+    },
+    resolve: async (_, args) => {
+      return await PhoneBook.countDocuments({
+        $or: [
+          { name: { $regex: new RegExp(args.keyword, "i") } },
+          { phone: { $regex: new RegExp(args.keyword, "i") } },
+        ],
+      }).exec();
+    },
+  },
 };
 
 module.exports = PhoneBookQueryType;
